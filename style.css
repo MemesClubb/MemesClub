@@ -1,0 +1,115 @@
+/* Definir o fundo de toda a página como preto */
+body {
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Garante que o corpo ocupe toda a altura da tela */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo do Banner */
+.banner {
+    background-image: url('banner-option-2-pronto.jpg');
+    background-size: cover; /* Garante que a imagem cubra o banner sem distorcer */
+    background-position: center center; /* Garante que a imagem fique centralizada */
+    background-repeat: no-repeat; /* Evita que a imagem se repita */
+    height: 300px; /* Altura padrão */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(0, 0, 0);
+    margin: 0;
+    padding: 0;
+}
+
+/* Tornar o banner responsivo para telas menores */
+@media (max-width: 768px) {
+    .banner {
+        height: 250px; /* Reduz a altura do banner em telas menores */
+        padding: 20px 0; /* Ajusta o padding para telas menores */
+    }
+
+    .banner h1 {
+        font-size: 2rem; /* Reduz o tamanho do título em telas menores */
+    }
+}
+/* Estilos dos memes */
+#memes-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: black;
+    padding: 20px;
+    flex-grow: 1; /* Faz o conteúdo ocupar o espaço restante */
+}
+
+/* Memes */
+.meme {
+    background-color: rgba(0, 0, 0, 0.7);
+    margin-bottom: 20px;
+    width: 80%;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.meme img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.meme p {
+    color: white;
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+/* Botão para o painel de controle */
+.botao {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    text-align: center;
+    padding: 10px;
+    background-color: #ff8c00;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.botao:hover {
+    background-color: #e07b00;
+}
+
+/* Tornar o banner responsivo */
+@media (max-width: 768px) {
+    .banner {
+        height: auto;
+        padding: 20px 0;
+    }
+
+    .banner h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Estilo do Rodapé */
+footer {
+    background-color: #ff8c00;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    position: relative; /* Faz o rodapé ficar fixo no fundo da página */
+    bottom: 0;
+    width: 100%;
+    z-index: 5;
+}
+
+footer p {
+    font-size: 1rem;
+    margin: 0;
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Controle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Área do painel que só será visível após a senha -->
+    <div id="painel-container" style="display: none;">
+        <div class="banner">
+            <h1>Painel de Controle</h1>
+        </div>
+
+        <div class="formulario">
+            <h2>Adicionar Meme</h2>
+            <form id="form-meme">
+                <input type="text" id="titulo" placeholder="Título do Meme" required>
+                <input type="text" id="descricao" placeholder="Descrição" required>
+                <input type="text" id="url" placeholder="URL da Imagem" required>
+                <button type="submit">Adicionar Meme</button>
+            </form>
+        </div>
+
+        <h2>Memes Atuais</h2>
+        <div id="memes-cadastrados">
+            <!-- Memes cadastrados vão aparecer aqui -->
+        </div>
+
+        <a href="index.html" class="botao">Ir para a Página Principal</a>
+    </div>
+
+    <!-- Tela de Login para acessar o painel -->
+    <div id="login-container">
+        <h1>Insira a senha para acessar o painel de controle:</h1>
+        <form id="login-form">
+            <input type="password" id="senha" placeholder="Digite a senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Senha definida
+        const senhaCorreta = "10881088";  // Senha simples de exemplo
+
+        // Função para verificar se o usuário já está logado
+        function verificarLogin() {
+            const logado = localStorage.getItem('logado');
+            if (logado === 'true') {
+                // Se o usuário já está logado, esconde o login e mostra o painel
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('painel-container').style.display = 'block';
+            } else {
+                // Se não está logado, mostra a tela de login
+                document.getElementById('login-container').style.display = 'block';
+                document.getElementById('painel-container').style.display = 'none';
+            }
+        }
+
+        // Função de login
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const senha = document.getElementById('senha').value;
+
+            // Verificação da senha
+            if (senha === senhaCorreta) {
+                // Salva no localStorage que o usuário está logado
+                localStorage.setItem('logado', 'true');
+
+                // Esconde a tela de login e exibe o painel
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('painel-container').style.display = 'block';
+            } else {
+                alert('Senha incorreta. Tente novamente!');
+            }
+        });
+
+        // Função para adicionar meme
+        document.getElementById('form-meme').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const titulo = document.getElementById('titulo').value;
+            const descricao = document.getElementById('descricao').value;
+            const url = document.getElementById('url').value;
+
+            let memes = localStorage.getItem('memes');
+            memes = memes ? JSON.parse(memes) : [];
+
+            memes.push({ titulo, descricao, url });
+            localStorage.setItem('memes', JSON.stringify(memes));
+
+            alert('Meme adicionado com sucesso!');
+            window.location.reload(); // Atualiza a página para mostrar o meme na lista
+        });
+
+        // Função para remover meme
+        function removerMeme(index) {
+            let memes = localStorage.getItem('memes');
+            memes = memes ? JSON.parse(memes) : [];
+            memes.splice(index, 1);
+            localStorage.setItem('memes', JSON.stringify(memes));
+            alert('Meme removido!');
+            window.location.reload(); // Atualiza a página para refletir a remoção
+        }
+
+        // Exibir memes cadastrados
+        function mostrarMemes() {
+            let memes = localStorage.getItem('memes');
+            memes = memes ? JSON.parse(memes) : [];
+
+            const memesContainer = document.getElementById('memes-cadastrados');
+            memesContainer.innerHTML = ''; // Limpa qualquer conteúdo anterior
+
+            memes.forEach((meme, index) => {
+                const memeContainer = document.createElement('div');
+                memeContainer.classList.add('meme');
+
+                const memeImg = document.createElement('img');
+                memeImg.src = meme.url;
+
+                const memeTitle = document.createElement('p');
+                memeTitle.textContent = meme.titulo;
+
+                const memeDesc = document.createElement('p');
+                memeDesc.textContent = meme.descricao;
+
+                const removerBtn = document.createElement('button');
+                removerBtn.textContent = 'Remover';
+                removerBtn.onclick = () => removerMeme(index);
+
+                memeContainer.appendChild(memeImg);
+                memeContainer.appendChild(memeTitle);
+                memeContainer.appendChild(memeDesc);
+                memeContainer.appendChild(removerBtn);
+
+                memesContainer.appendChild(memeContainer);
+            });
+        }
+
+        // Carregar os memes e verificar login quando a página for carregada
+        window.onload = function () {
+            verificarLogin();
+            mostrarMemes();
+        };
+    </script>
+</body>
+</html>

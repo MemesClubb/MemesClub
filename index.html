@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Banner -->
+    <div class="banner">
+        
+    </div>
+
+    <!-- Exibir Memes -->
+    <div id="memes-list" class="memes-container">
+        <!-- Os memes serão carregados e exibidos aqui -->
+    </div>
+
+    
+
+    <script src="script.js"></script>
+    <script>
+        // Função para carregar os memes na página principal (index.html)
+        function carregarMemes() {
+            let memes = localStorage.getItem('memes');
+            memes = memes ? JSON.parse(memes) : [];
+
+            const memesContainer = document.getElementById('memes-list');
+            memesContainer.innerHTML = ''; // Limpa qualquer conteúdo anterior
+
+            memes.reverse(); // Reverte a ordem dos memes para mostrar o mais recente em cima
+
+            memes.forEach((meme) => {
+                const memeContainer = document.createElement('div');
+                memeContainer.classList.add('meme');
+
+                const memeImg = document.createElement('img');
+                memeImg.src = meme.url;
+
+                const memeTitle = document.createElement('p');
+                memeTitle.textContent = meme.titulo;
+
+                const memeDesc = document.createElement('p');
+                memeDesc.textContent = meme.descricao;
+
+                memeContainer.appendChild(memeImg);
+                memeContainer.appendChild(memeTitle);
+                memeContainer.appendChild(memeDesc);
+
+                memesContainer.appendChild(memeContainer);
+            });
+        }
+
+        // Carregar os memes quando a página for carregada
+        window.onload = function () {
+            carregarMemes();
+        };
+
+        
+    </script>
+     <!-- Rodapé -->
+     <footer>
+        <p></p>
+    </footer>
+</body>
+</html>
